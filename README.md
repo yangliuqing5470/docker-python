@@ -1,2 +1,3 @@
-# docker-python
-基于python实现的精简版docker
+# 环境要求
+
++ python version >= 3.12
