@@ -5,7 +5,7 @@ from modules import namespaces
 
 
 def run():
-    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "root")
+    path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "images", "busybox")
     program = "/bin/sh"
     args = ["/bin/sh"]
     namespaces.namespaces(path, program, args)
