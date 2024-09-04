@@ -21,11 +21,7 @@ def _worker(path: str, program: str, args: list) -> None:
     os.execvp(program, args)
 
 def namespaces(path: str, program: str, args: list):
-    os.unshare(os.CLONE_NEWUTS)  # uts namespaces
-    os.unshare(os.CLONE_NEWPID)  # pid namespaces
-    os.unshare(os.CLONE_NEWNS)   # mount namespaces
-    os.unshare(os.CLONE_NEWNET)  # net namespaces
-    os.unshare(os.CLONE_NEWIPC)  # ipc namespaces
+    os.unshare(os.CLONE_NEWUTS | os.CLONE_NEWPID | os.CLONE_NEWNS | os.CLONE_NEWNET | os.CLONE_NEWIPC)
     p = multiprocessing.Process(target=_worker, args=(path, program, args))
     p.start()
     # 等待子进程结束
