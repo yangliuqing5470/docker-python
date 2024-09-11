@@ -126,6 +126,10 @@ def sethostnet_task(child_conn_task, parent_conn):
     # 等待清理网络资源
     child_conn_task.recv()
     clearnet()
+    # 清理容器运行时目录
+    path = child_conn_task.recv()
+    _run_command(["umount", path])
+    os.rmdir(path)
 
 
 def _unionfs(path: str, program: str, args: list):
@@ -157,8 +161,7 @@ def _unionfs(path: str, program: str, args: list):
     # 通知宿主机清理网络资源
     parent_conn_task.send("clear network")
     # 清理容器运行时目录
-    _run_command(["umount", path])
-    os.rmdir(path)
+    parent_conn_task.send(path)
 
 
 def unionfs(images_path: str, program: str, args: list):
